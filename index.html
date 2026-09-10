@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aldenaire Catering - Digital Menu</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Decor -->
+    <div class="bg-overlay"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <div class="logo-brand">
+                <img src="Logo.webp" alt="Aldenaire Catering Logo" class="brand-logo">
+                <div class="brand-text">
+                    <span class="brand-title">ALDENAIRE</span>
+                    <span class="brand-subtitle">CATERING & DINING</span>
+                </div>
+            </div>
+
+            <div class="nav-actions">
+                <button id="cart-toggle-btn" class="nav-btn cart-btn" aria-label="View Cart">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span class="cart-label">Cart</span>
+                    <span id="cart-count" class="cart-badge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-badge">Exquisite Culinary Experience</div>
+            <h1 class="hero-title">OUR MENU</h1>
+            <p class="hero-description">Savor handcrafted delicacies prepared with passion, premium ingredients, and timeless culinary perfection.</p>
+            <div class="contact-strip">
+                <span><i class="fa-solid fa-phone"></i> +880 1324 399538</span>
+                <span><i class="fa-solid fa-envelope"></i> contact@aldenairecatering.com</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Controls & Filters Section -->
+    <section class="menu-controls-section">
+        <div class="container controls-container">
+            <!-- Search Box -->
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="search-input" placeholder="Search delicious dishes..." aria-label="Search dishes">
+                <button id="clear-search" class="clear-btn" aria-label="Clear search"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <!-- View Switcher -->
+            <div class="view-switch">
+                <button id="view-serpentine-btn" class="view-btn active" title="Curved Menu View">
+                    <i class="fa-solid fa-route"></i> Signature Flow
+                </button>
+                <button id="view-grid-btn" class="view-btn" title="Grid Menu View">
+                    <i class="fa-solid fa-grip"></i> Grid Layout
+                </button>
+            </div>
+        </div>
+
+        <!-- Category Filters -->
+        <div class="container categories-container">
+            <div class="category-pills" id="category-pills">
+                <button class="pill active" data-category="all">All Items</button>
+                <button class="pill" data-category="mains">Main Course</button>
+                <button class="pill" data-category="burgers">Burgers & Pizzas</button>
+                <button class="pill" data-category="pasta">Pasta & Italian</button>
+                <button class="pill" data-category="desserts">Desserts</button>
+                <button class="pill" data-category="beverages">Beverages</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Menu Display -->
+    <main class="main-content container">
+        <!-- Serpentine Flow View Container -->
+        <div id="serpentine-view" class="menu-view serpentine-container active">
+            <div class="serpentine-path-bg"></div>
+            <div id="serpentine-items-list" class="serpentine-items-list">
+                <!-- Items injected dynamically via JS -->
+            </div>
+        </div>
+
+        <!-- Grid View Container -->
+        <div id="grid-view" class="menu-view grid-container">
+            <div id="grid-items-list" class="grid-items-list">
+                <!-- Items injected dynamically via JS -->
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="no-results" class="no-results hidden">
+            <i class="fa-solid fa-plate-wheat empty-icon"></i>
+            <h3>No dishes found</h3>
+            <p>Try searching for another dish or selecting a different category.</p>
+        </div>
+    </main>
+
+    <!-- Item Details Modal -->
+    <div id="item-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <button id="close-modal-btn" class="modal-close-btn" aria-label="Close Modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body">
+                <div class="modal-image-wrapper">
+                    <img id="modal-img" src="" alt="Dish Image">
+                    <span id="modal-badge" class="dish-badge">Popular</span>
+                </div>
+                <div class="modal-content">
+                    <h2 id="modal-title" class="modal-title">Dish Title</h2>
+                    <div class="modal-meta">
+                        <span id="modal-category" class="modal-meta-tag"><i class="fa-solid fa-tag"></i> Main Course</span>
+                        <span id="modal-prep" class="modal-meta-tag"><i class="fa-solid fa-clock"></i> 20 mins</span>
+                        <span id="modal-cal" class="modal-meta-tag"><i class="fa-solid fa-fire"></i> 550 kcal</span>
+                    </div>
+                    <p id="modal-description" class="modal-desc">Dish description goes here...</p>
+
+                    <div class="modal-ingredients">
+                        <h4>Key Ingredients:</h4>
+                        <p id="modal-ingredients-list">Ingredients list...</p>
+                    </div>
+
+                    <div class="modal-actions-row">
+                        <span id="modal-price" class="modal-price">$0.00</span>
+                        <div class="qty-selector">
+                            <button id="modal-qty-minus" class="qty-btn">-</button>
+                            <span id="modal-qty-val" class="qty-val">1</span>
+                            <button id="modal-qty-plus" class="qty-btn">+</button>
+                        </div>
+                        <button id="modal-add-btn" class="add-cart-btn">
+                            <i class="fa-solid fa-cart-plus"></i> Add to Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide-over Cart Drawer -->
+    <div id="cart-drawer" class="cart-drawer hidden">
+        <div id="cart-backdrop" class="cart-backdrop"></div>
+        <div class="cart-panel">
+            <div class="cart-header">
+                <h3><i class="fa-solid fa-basket-shopping"></i> Your Selection</h3>
+                <button id="close-cart-btn" class="close-cart-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div id="cart-items-container" class="cart-items-container">
+                <!-- Cart items dynamically rendered -->
+            </div>
+
+            <div class="cart-footer">
+                <div class="cart-summary-line">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">$0.00</span>
+                </div>
+                <div class="cart-summary-line">
+                    <span>Tax & Service (10%)</span>
+                    <span id="cart-tax">$0.00</span>
+                </div>
+                <div class="cart-summary-line total">
+                    <span>Total</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+                <button id="checkout-btn" class="checkout-btn">
+                    Place Order <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Toast/Modal -->
+    <div id="order-toast" class="toast hidden">
+        <i class="fa-solid fa-circle-check toast-icon"></i>
+        <div class="toast-content">
+            <h4>Order Placed Successfully!</h4>
+            <p>Thank you for choosing Aldenaire Catering.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <img src="Logo.webp" alt="Aldenaire Catering" class="footer-logo">
+            <p class="footer-tagline">Crafting unforgettable culinary moments for your finest occasions.</p>
+            <div class="footer-info">
+                <span><i class="fa-solid fa-phone"></i> +880 1324 399538</span>
+                <span><i class="fa-solid fa-envelope"></i> contact@aldenairecatering.com</span>
+                <span><i class="fa-solid fa-location-dot"></i> Luxury Catering Suites & Dining</span>
+            </div>
+            <p class="copyright">&copy; 2025 Aldenaire Catering. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
